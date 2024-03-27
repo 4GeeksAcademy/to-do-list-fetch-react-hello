@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 
 const InputTask = () => {
+    const [inputUser, setInputUser] = useState('')
     const [inputTask, setInputTask] = useState('')
     const [toDoList, setToDoList] = useState([])
 
@@ -9,7 +10,7 @@ const InputTask = () => {
     async function handlerCreateList() {
         try {
 
-            const response = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/${inputTask}`, {
+            const response = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/${inputUser}`, {
                 method: 'POST',
                 body: JSON.stringify([]),
                 headers: {
@@ -33,7 +34,7 @@ const InputTask = () => {
     /* OBTENER TAREA DEL USUARIO */
     async function handlerGetData() {
         try {
-            const responseGetData = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/test27`)
+            const responseGetData = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/${inputUser}`)
 
             if (!responseGetData.ok) {
                 throw new Error('Error fue: ', error)
@@ -50,14 +51,12 @@ const InputTask = () => {
 
     /* ACTUALIZA */
     async function handlerUpdateTask(){
-        const newTask = {...toDoList,
-            inputTask
-        }
-        console.log(newTask)
+        
+        
         try{
-            const resUpdateTask = await fetch('https://playground.4geeks.com/apis/fake/todos/user/test27', {
+            const resUpdateTask = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/${inputUser}`, {
                 method: 'PUT',
-                body: JSON.stringify([newTask]),
+                body: JSON.stringify([...toDoList, {label: inputTask, done: false}]),
                 headers: {
                     'Content-type':'application/json'
                 }
@@ -68,9 +67,8 @@ const InputTask = () => {
             }
 
             const dateUpdateTask = await resUpdateTask.json()
-            console.log(dateUpdateTask)
-            setInputTask({label: '', done: false})
-            setToDoList(dateUpdateTask)
+            /* setToDoList(dateUpdateTask) */
+            handlerGetData()
 
 
         }catch(error){
@@ -83,13 +81,19 @@ const InputTask = () => {
             <input
                 type="text"
                 onChange={(eve) => {
-                    setInputTask(eve.target.value)
+                    setInputUser(eve.target.value)
                 }}
             />
             <button onClick={handlerCreateList}>Create User</button>
+            <p>Su usuario es: {inputUser}</p>
+
+
+            <input type="text"
+            onChange={ (even)=>{setInputTask(even.target.value)} }
+             />
             <button onClick={handlerGetData}>get data</button>
 
-            <button onClick={handlerUpdateTask} >update</button>
+            <button onClick={handlerUpdateTask} >update data</button>
 
             {toDoList.map( (task, index)=>{
                 return(
