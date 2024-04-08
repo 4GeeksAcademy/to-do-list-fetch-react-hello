@@ -10,3 +10,35 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+
+.principal{
+    position: relative;
+}
+
+.contenido{
+    width: 100vw;
+    position: absolute;
+}
+
+.caja2{
+    position: relative;
+    /* color: #ffa500 */
+}
+
+.img{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: auto;
+    opacity: 0.3;
+    
+    top: 0
+}
+
+#app{
+    height: 100vh;
+}
+
