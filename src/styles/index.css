@@ -42,3 +42,14 @@
     height: 100vh;
 }
 
+.anchor{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.anchor:hover{
+    text-decoration: none;
+    color: blue;
+    cursor: pointer;
+}
